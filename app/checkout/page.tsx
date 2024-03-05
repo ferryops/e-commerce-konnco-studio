@@ -1,6 +1,7 @@
 "use client";
 
 import Header from "@/components/Header";
+import { useState } from "react";
 
 interface CartItem {
   id: number;
@@ -9,6 +10,7 @@ interface CartItem {
   quantity: number;
 }
 export default function Checkout() {
+  const [status, setStatus] = useState(true);
   const cartItems = JSON.parse(localStorage.getItem("cart") || "[]");
   const total = cartItems.reduce((acc: number, item: any) => acc + item.price * item.quantity, 0);
 
@@ -33,6 +35,7 @@ export default function Checkout() {
           const paymentUrl = `https://app.sandbox.midtrans.com/snap/v2/vtweb/${data.token}`;
           window.open(paymentUrl, "_blank");
           handlePaymentSuccess(cartItems);
+          setStatus(true);
         } else {
           console.error("Failed to retrieve payment token:", data.error);
         }
@@ -93,6 +96,7 @@ export default function Checkout() {
             <button className="m-auto flex border p-1" onClick={() => handlePay()}>
               Bayar
             </button>
+            {status ? <p className="border-2 border-green-500 p-4 mt-4 text-center">Pembayaran mu berhasil🎉</p> : null}
           </div>
         ) : (
           <p className="text-sm">Keranjang belanja Anda kosong</p>

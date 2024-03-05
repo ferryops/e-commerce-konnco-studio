@@ -71,6 +71,10 @@ export default function Home() {
             Login
           </button>
         </form>
+        <div className="flex justify-center gap-2 p-2 text-xs">
+          <button onClick={() => router.push("/customer")}>Belanja</button>
+          <button onClick={() => router.push("/admin")}>Admin</button>
+        </div>
       </section>
     </main>
   );
