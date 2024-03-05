@@ -24,18 +24,19 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
-  const { id, title, description, price, stock } = await req.json();
+  const { id, title, description, price, stock, status } = await req.json();
 
   const connection = await connectDB();
-  await connection.query("UPDATE products SET title=?, description=?, price=?, stock=? WHERE id=?", [
+  await connection.query("UPDATE products SET title=?, description=?, price=?, stock=?, status=? WHERE id=?", [
     title,
     description,
     price,
     stock,
+    status,
     id,
   ]);
   connection.end();
-  const data = { id, title, description, price, stock };
+  const data = { id, title, description, price, stock, status };
   return NextResponse.json({ message: "Product updated successfully", data });
 }
 
