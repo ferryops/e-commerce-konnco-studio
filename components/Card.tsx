@@ -1,3 +1,4 @@
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 interface CardProps {
@@ -10,6 +11,7 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ id, title, description, price, stok }) => {
   const [quantity, setQuantity] = useState(0);
+  const router = useRouter();
 
   useEffect(() => {
     const cartItems = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -51,6 +53,14 @@ const Card: React.FC<CardProps> = ({ id, title, description, price, stok }) => {
     }
   };
 
+  const handleBuy = () => {
+    if (quantity > 0) {
+      router.push("/checkout");
+    } else {
+      alert("kamu belum tambahkan produk ini");
+    }
+  };
+
   return (
     <div className="max-w-sm rounded overflow-hidden border px-6 py-4">
       <div>
@@ -75,7 +85,11 @@ const Card: React.FC<CardProps> = ({ id, title, description, price, stok }) => {
             +
           </button>
         </div>
-        <button className={`border px-2 text-sm ${stok <= 0 ? "p-0 border-red-500" : ""}`} disabled={stok <= 0}>
+        <button
+          onClick={() => handleBuy()}
+          className={`border px-2 text-sm ${stok <= 0 ? "p-0 border-red-500" : ""}`}
+          disabled={stok <= 0}
+        >
           {stok <= 0 ? "Habis" : "Beli"}
         </button>
       </div>
