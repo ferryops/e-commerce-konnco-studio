@@ -10,7 +10,7 @@ interface CartItem {
   quantity: number;
 }
 export default function Checkout() {
-  const [status, setStatus] = useState(true);
+  const [status, setStatus] = useState(false);
   const cartItems = JSON.parse(localStorage.getItem("cart") || "[]");
   const total = cartItems.reduce((acc: number, item: any) => acc + item.price * item.quantity, 0);
 

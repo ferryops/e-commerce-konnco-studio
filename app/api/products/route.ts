@@ -9,17 +9,18 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  const { title, description, price, stock } = await req.json();
+  const { title, description, price, stock, status } = await req.json();
 
   const connection = await connectDB();
-  await connection.query("INSERT INTO products (title, description, price, stock) VALUES (?,?,?,?)", [
+  await connection.query("INSERT INTO products (title, description, price, stock, status) VALUES (?,?,?,?,?)", [
     title,
     description,
     price,
     stock,
+    status,
   ]);
   connection.end();
-  const data = { title, description, price, stock };
+  const data = { title, description, price, stock, status };
   return NextResponse.json({ message: "Product created successfully", data });
 }
 
